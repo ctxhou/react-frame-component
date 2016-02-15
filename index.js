@@ -33,6 +33,14 @@ var Frame = React.createClass({
     head:  React.PropTypes.node,
     initialContent:  React.PropTypes.string,
   },
+
+  getInitialState: function() {
+    var head = this.props.head.join('');
+    this.setState({
+      initialContent: '<!DOCTYPE html><html><head>'+head+'</head><body><div></div></body></html>'
+    })
+  },
+
   getDefaultProps: function() {
     return {
       initialContent: '<!DOCTYPE html><html><head></head><body><div></div></body></html>'
@@ -62,7 +70,7 @@ var Frame = React.createClass({
       if (!this._setInitialContent) {
         doc.clear();
         doc.open();
-        doc.write(this.props.initialContent);
+        doc.write(this.state.initialContent);
         doc.close();
         this._setInitialContent = true;
       }
